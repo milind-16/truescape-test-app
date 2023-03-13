@@ -1,0 +1,66 @@
+<div class="occupy-parent" fxLayout="row" fxLayoutAlign="center center">
+
+    <!-- login card -->
+    <div id="login-container" class="card mat-elevation-z1" fxFlex="95" fxFlex.gt-xs="50" fxFlex.gt-md="26"
+        fxFlex.gt-lg="20">
+
+        <div id="mining-logo-container" fxLayoutAlign="center center">
+            <img src="assets/logo/mining-company-logo.png" height="95" width="230" />
+        </div> 
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <!-- username -->
+        <div fxLayoutAlign="center center">
+            <mat-form-field appearance="outline" fxFlex="80" floatLabel="always">
+                <mat-label>USERNAME</mat-label>
+                <input matInput placeholder="" type="text" [(ngModel)]="usernameControl">
+            </mat-form-field>
+        </div>
+
+        <!-- password -->
+        <div fxLayoutAlign="center center">
+            <mat-form-field appearance="outline" fxFlex="80" floatLabel="always">
+                <mat-label>PASSWORD</mat-label>
+                <input matInput placeholder="" type="password" [(ngModel)]="passwordControl">
+            </mat-form-field>
+        </div>
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <div fxLayoutAlign="center center">
+            <button  class="highlight-black" mat-raised-button (click)="login(usernameControl, passwordControl)" fxFlex="80">LOGIN</button>
+        </div>
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <!-- empty space -->
+        <div class="empty-space">
+        </div>
+
+        <div id="truescape-logo-container" fxLayoutAlign="center center">
+            Designed by&nbsp;<img src="assets/logo/truescape-logo-dark.png" height="15" width="80" />
+        </div>
+
+        <div>
+            <mat-progress-bar mode="indeterminate" [color]="'primary'" *ngIf="isLoginLoading"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" value="0" [color]="'primary'" *ngIf="!isLoginLoading"></mat-progress-bar>
+        </div>
+
+    </div>
+
+</div>

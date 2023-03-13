@@ -1,0 +1,76 @@
+<div class="nav-bar" fxLayout="row" fxLayoutAlign="start start">
+    <div fxFlex="80">
+        <img src="assets/logo/truescape-logo-light.png" height="30" width="150" />
+    </div>
+    <div fxFlex="20" fxLayoutAlign="end start">
+        <button mat-flat-button (click)="logout()">LOGOUT</button>
+    </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-sm="20" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="100" class="card">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>PRE-MINING</mat-card-title>
+                    <mat-card-subtitle>2023 (CURRENT)</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+
+                    <!-- illustration -->
+                    <img src="assets/illustrations/lost.svg" height="100%" width="100%"/>
+
+                    <!-- large space -->
+                    <div class="empty-space"></div>
+
+                    <!-- space -->
+                    <div>&nbsp;</div>
+
+                    <!-- load pre-mining existing -->
+                    <div>
+                        <button mat-stroked-button fxFlex [disabled]="isModelLoading" (click)="setScenePreMiningExisting()">EXISTING TERRAIN</button>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="100" class="card">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>MINING</mat-card-title>
+                    <mat-card-subtitle>2025 - 2027</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+
+                    <!-- illustration -->
+                    <img src="assets/illustrations/factory.svg" height="100%" width="100%"/>
+
+                    <!-- large space -->
+                    <div class="empty-space"></div>
+
+                    <!-- load mining terrain -->
+                    <div>
+                        <button mat-stroked-button fxFlex (click)="setSceneMiningTerrain()" [disabled]="isModelLoading">TERRAIN</button>
+                    </div>
+
+                    <!-- space -->
+                    <div>&nbsp;</div>
+
+                    <!-- load mining facility -->
+                    <div>
+                        <button mat-stroked-button fxFlex (click)="setSceneMiningFacility()" [disabled]="isModelLoading">FACILITY</button>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="80" class="card">
+        <mat-card style="height: 100%;">
+            <mat-card-content>
+                <canvas #canvas id="canvas" style="height: 100%; width: 100%;"></canvas>
+                <div class="empty-space"></div> 
+                <mat-progress-bar mode="indeterminate" *ngIf="isModelLoading"></mat-progress-bar>         
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
