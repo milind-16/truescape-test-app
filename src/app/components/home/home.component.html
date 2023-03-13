@@ -27,7 +27,7 @@
 
                     <!-- load pre-mining existing -->
                     <div>
-                        <button mat-stroked-button fxFlex [disabled]="isModelLoading" (click)="setScenePreMiningExisting()">EXISTING TERRAIN</button>
+                        <button mat-stroked-button fxFlex [disabled]="isModelLoading" (click)="setScenePreMiningExisting()">VIEW</button>
                     </div>
 
                 </mat-card-content>
@@ -47,17 +47,12 @@
                     <!-- large space -->
                     <div class="empty-space"></div>
 
-                    <!-- load mining terrain -->
-                    <div>
-                        <button mat-stroked-button fxFlex (click)="setSceneMiningTerrain()" [disabled]="isModelLoading">TERRAIN</button>
-                    </div>
-
                     <!-- space -->
                     <div>&nbsp;</div>
 
-                    <!-- load mining facility -->
+                    <!-- load mining terrain -->
                     <div>
-                        <button mat-stroked-button fxFlex (click)="setSceneMiningFacility()" [disabled]="isModelLoading">FACILITY</button>
+                        <button mat-stroked-button fxFlex (click)="setSceneMiningTerrain()" [disabled]="isModelLoading">VIEW</button>
                     </div>
 
                 </mat-card-content>

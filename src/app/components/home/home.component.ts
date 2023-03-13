@@ -41,71 +41,50 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.setSceneMiningTerrain();
+    this.setScenePreMiningExisting();
   }
 
   /**
-   * Mining Facility
-   */
-  public setSceneMiningFacility() {
-    this.discardScene()
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#FFFFFF');
-
-    // Model
-    this.isModelLoading = true;
-    const loader = new GLTFLoader();
-    loader.load('assets/mining/Mining_Facilities.gltf',
-      (gltf: GLTF) => {
-        this.isModelLoading = false;
-        if (null != this.scene)
-          this.scene.add(gltf.scene);
-      },
-      (progress) => {
-
-      },
-      (err) => {
-        this.isModelLoading = false;
-      });
-    // Camera
-    this.camera = new THREE.PerspectiveCamera(
-      10,
-      this.canvasRef.nativeElement.clientWidth / this.canvasRef.nativeElement.clientHeight,
-      1,
-      20000
-    );
-    this.camera.position.set(2500, 2000, -2000);
-    // Lights
-    let pointLi1 = new THREE.PointLight(0xffffff, 3, 12000);
-    pointLi1.position.set(0, 5000, 0);
-    this.scene.add(pointLi1);
-
-    this.setRender();
-    this.setControls();
-  }
-
-  /**
-   * Mining Terrain
+   * Post - mining terrain and facility
    */
   public setSceneMiningTerrain() {
     this.discardScene()
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#FFFFFF');
-    // Model
+    // Model loading start
     this.isModelLoading = true;
     const loader = new GLTFLoader();
     loader.load('assets/mining/Terrain_Year16.gltf',
       (gltf: GLTF) => {
-        this.isModelLoading = false;
         if (null != this.scene)
           this.scene.add(gltf.scene);
+
+        // load facility start
+        loader.load('assets/mining/Mining_Facilities.gltf',
+          (gltf: GLTF) => {
+            this.isModelLoading = false;
+            if (null != this.scene)
+              this.scene.add(gltf.scene);
+          },
+          (progress) => {
+
+          },
+          (err) => {
+            this.isModelLoading = false;
+          }
+        );
+        // load facility end
+
       },
       (progress) => {
 
       },
       (err) => {
         this.isModelLoading = false;
-      });
+      }
+    );
+    // Model loading end
+
     // Camera
     this.camera = new THREE.PerspectiveCamera(
       50,
@@ -113,7 +92,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       1,
       20000
     );
-    this.camera.position.set(0, 5000, 0);
+    this.camera.position.set(1500, 1500, 1500);
+
     // Lights
     let pointLi1 = new THREE.PointLight(0xffffff, 3, 12000);
     pointLi1.position.set(0, 5000, 0);
@@ -124,28 +104,47 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Pre mining existing
+   * Pre - mining terrain
    */
   public setScenePreMiningExisting() {
     this.discardScene()
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#FFFFFF');
 
-    // Model
+    // Model load start
     this.isModelLoading = true;
     const loader = new GLTFLoader();
     loader.load('assets/mining/Terrain_Existing.gltf',
       (gltf: GLTF) => {
-        this.isModelLoading = false;
         if (null != this.scene)
           this.scene.add(gltf.scene);
+
+        // load outer start
+        loader.load('assets/mining/Terrain_Outer.gltf',
+          (gltf: GLTF) => {
+            this.isModelLoading = false;
+            if (null != this.scene)
+              this.scene.add(gltf.scene);
+          },
+          (progress) => {
+
+          },
+          (err) => {
+            this.isModelLoading = false;
+          }
+        );
+        // load outer end
+
       },
       (progress) => {
 
       },
       (err) => {
         this.isModelLoading = false;
-      });
+      }
+    );
+    // Model load end
+
     // Camera
     this.camera = new THREE.PerspectiveCamera(
       50,
@@ -153,11 +152,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       1,
       20000
     );
-    this.camera.position.set(0, 5000, 0);
+    this.camera.position.set(2500, 2500, 2500);
+
     // Lights
     let pointLi1 = new THREE.PointLight(0xffffff, 3, 12000);
     pointLi1.position.set(0, 5000, 0);
     this.scene.add(pointLi1);
+
+    // Pin
+    let loader2 = new THREE.TextureLoader();
+    let geometry = new THREE.BoxGeometry(200, 260, 10);
+    let material = new THREE.MeshBasicMaterial({ map: loader2.load('assets/extras/Pin.svg') });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, 900, 0);
+    this.scene.add(mesh);
 
     this.setRender();
     this.setControls();
@@ -190,7 +198,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.controls.update();
   };
 
-  logout(){
+  logout() {
     this.router.navigateByUrl('/login');
   }
 
