@@ -1,7 +1,9 @@
-<h1 mat-dialog-title>Hi </h1>
+<h1 mat-dialog-title>PHOTOS</h1>
 <div mat-dialog-content>
-  hi
+    <div style="height: 250px; width: 800px;">
+        <ng-image-slider [images]="photoCollection" #nav></ng-image-slider>
+    </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions fxLayoutAlign="end center">
   <button mat-button (click)="close()" cdkFocusInitial>Close</button>
 </div>

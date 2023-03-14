@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import { GalleryDialog } from './dialogs/gallery.dialog';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { GalleryDialog } from './dialogs/gallery.dialog';
     MatSnackBarModule,
     FormsModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    NgImageSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
