@@ -14,12 +14,15 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import { GalleryDialog } from './dialogs/gallery.dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    GalleryDialog
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import {MatCardModule} from '@angular/material/card';
     MatProgressBarModule,
     MatSnackBarModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

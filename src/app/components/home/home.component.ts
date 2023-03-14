@@ -4,6 +4,8 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { GalleryDialog } from 'src/app/dialogs/gallery.dialog';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public isModelLoading: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.discardScene();
@@ -41,7 +43,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.setScenePreMiningExisting();
+    // this.setScenePreMiningExisting();
   }
 
   /**
@@ -200,6 +202,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   logout() {
     this.router.navigateByUrl('/login');
+  }
+
+  openGalleryDialog(): void {
+    const dialogRef = this.dialog.open(GalleryDialog, {});
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }
