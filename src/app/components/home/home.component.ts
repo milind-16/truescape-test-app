@@ -19,9 +19,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private renderer!: THREE.WebGLRenderer;
   private camera!: THREE.PerspectiveCamera;
   private scene!: THREE.Scene;
+
   private controls!: OrbitControls;
+  private css2ren: CSS2DRenderer = new CSS2DRenderer();
+
+  private clickListnerMesh!: THREE.Mesh;
+  private raycaster = new THREE.Raycaster();
+  public mouse = new THREE.Vector2();
 
   public isModelLoading: boolean = false;
+  public currentSceneName: string = '';
 
   constructor(private router: Router, public dialog: MatDialog) { }
 
@@ -37,13 +44,30 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     let renderElem = document.getElementById('cssrenderer');
     renderElem?.remove();
+    if (this.renderer)
+      this.renderer.dispose();
   }
 
   ngOnInit(): void {
+    
   }
 
   ngAfterViewInit() {
-    // this.setScenePreMiningExisting();
+    this.setScenePreMiningExisting();
+
+    // mouse click listner
+    window.addEventListener('click', (event: any) => {
+      if(0.50 <= this.mouse.x && this.mouse.x < 0.60
+        && 0.00 <= this.mouse.y && this.mouse.y < 0.3 && this.currentSceneName==='pre-mining'){
+          this.openGalleryDialog();
+      }
+    }, false);
+
+    // mouse move listner
+    window.addEventListener('mousemove', (event: any) => {
+      this.mouse.x = (event.clientX / this.canvasRef.nativeElement.clientWidth) * 2 - 1;
+      this.mouse.y = - (event.clientY / this.canvasRef.nativeElement.clientHeight) * 2 + 1;
+    }, false);
   }
 
   /**
@@ -51,6 +75,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   public setSceneMiningTerrain() {
     this.discardScene()
+    this.currentSceneName = 'mining';
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#FFFFFF');
     // Model loading start
@@ -110,6 +135,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   public setScenePreMiningExisting() {
     this.discardScene()
+    this.currentSceneName = 'pre-mining';
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#FFFFFF');
 
@@ -165,7 +191,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     let loader2 = new THREE.TextureLoader();
     let geometry = new THREE.BoxGeometry(200, 260, 10);
     let material = new THREE.MeshBasicMaterial({ map: loader2.load('assets/extras/Pin.svg') });
-    var mesh = new THREE.Mesh(geometry, material);
+    let mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(0, 900, 0);
     this.scene.add(mesh);
 
@@ -186,14 +212,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setControls = () => {
-    const renderer = new CSS2DRenderer();
-    renderer.setSize(this.canvasRef.nativeElement.clientWidth, this.canvasRef.nativeElement.clientHeight);
-    renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.top = '0px';
-    renderer.domElement.style.right = '0px';
-    renderer.domElement.id = 'cssrenderer';
-    document.body.appendChild(renderer.domElement);
-    this.controls = new OrbitControls(this.camera, renderer.domElement);
+    this.css2ren.setSize(this.canvasRef.nativeElement.clientWidth, this.canvasRef.nativeElement.clientHeight);
+    this.css2ren.domElement.style.position = 'absolute';
+    this.css2ren.domElement.style.top = '0px';
+    this.css2ren.domElement.style.right = '0px';
+    this.css2ren.domElement.id = 'cssrenderer';
+    document.body.appendChild(this.css2ren.domElement);
+    this.controls = new OrbitControls(this.camera, this.css2ren.domElement);
     this.controls.autoRotate = true;
     this.controls.enableZoom = true;
     this.controls.enablePan = false;
@@ -206,7 +231,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openGalleryDialog(): void {
     const dialogRef = this.dialog.open(GalleryDialog, {});
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
 }
